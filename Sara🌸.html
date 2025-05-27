@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>তুমি ছাড়া আমি নেই</title>
+  <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Kalpurush', sans-serif;
+      background: linear-gradient(to right, #ffd6d6, #ffeaea);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      color: #4a0000;
+      overflow: hidden;
+      padding-top: 40px;
+    }
+
+    .heart {
+      font-size: 50px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px 20px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      max-width: 700px;
+      width: 90%;
+      text-align: center;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+      display: none; /* Initially hidden */
+    }
+
+    h1 {
+      color: #d10000;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .line {
+      font-size: 18px;
+      margin: 10px 0;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      overflow: hidden;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 20px;
+      animation: floatUp 1.5s ease-out forwards;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+      }
+    }
+
+    #startButton {
+      margin-top: 80px;
+      padding: 15px 30px;
+      font-size: 22px;
+      background: #d10000;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(209, 0, 0, 0.7);
+      transition: background 0.3s ease;
+    }
+    #startButton:hover {
+      background: #a30000;
+    }
+
+    footer {
+      margin: 20px;
+      font-size: 14px;
+      color: #777;
+    }
+
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 32px;
+      }
+      .line {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="heart">💔</div>
+
+  <button id="startButton">This is for you</button>
+
+  <div class="card" id="card">
+    <h1>তুমি ছাড়া আমি কিছুই না</h1>
+    <div id="lines"></div>
+  </div>
+
+  <footer>Really Love You 🥹💔</footer>
+
+  <audio id="bgMusic" loop>
+    <source
+      src="https://raw.githubusercontent.com/chayonkumer/Songfile/main/lakh%20Samjhau%20Main%20TA%20Dil%20Samaj%20Nahi%20Pata%20Song%20Status%20Video%20%F0%9F%A5%B0%F0%9F%A5%B0_whatsappstatus%20_lovestatus%20_viralvideo(MP3_160K).mp3"
+      type="audio/mpeg"
+    />
+    আপনার ব্রাউজার অডিও প্লে করতে পারে না।
+  </audio>
+
+  <script>
+    const lines = [
+      'তুমি ছাড়া জীবনটা কেমন জানো?',
+      'একটা অসমাপ্ত গল্পের মত।',
+      'দিন চলে যায়, কিন্তু মন পড়ে থাকে তোমার কাছে।',
+      '',
+      'আমি জানি হয়তো সবকিছু সহজ না,',
+      'কিন্তু একটাই সত্য —',
+      'আমি তোমাকে ছাড়া থাকতে পারি না।',
+      '',
+      'তুমি আমার সুখ, আমার শান্তি, আমার ভালোবাসা।',
+      'শুধু চাই তুমি বুঝো,',
+      'আমি আজীবন তোমার পাশে থাকতে চাই।',
+    ];
+
+    const container = document.getElementById('lines');
+    const card = document.getElementById('card');
+    const startButton = document.getElementById('startButton');
+    const bgMusic = document.getElementById('bgMusic');
+
+    function typeLine(line) {
+      return new Promise((resolve) => {
+        const p = document.createElement('p');
+        p.classList.add('line');
+        container.appendChild(p);
+
+        let i = 0;
+        const interval = setInterval(() => {
+          if (i < line.length) {
+            p.textContent += line[i];
+            createFloatingEmoji(p);
+            i++;
+          } else {
+            clearInterval(interval);
+            resolve();
+          }
+        }, 60);
+      });
+    }
+
+    function createFloatingEmoji(element) {
+      const emoji = document.createElement('span');
+      emoji.className = 'emoji';
+      emoji.innerText = '❤️';
+      const rect = element.getBoundingClientRect();
+      emoji.style.left = rect.left + window.pageXOffset + Math.random() * rect.width + 'px';
+      emoji.style.top = rect.top + window.pageYOffset + Math.random() * 20 + 'px';
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 2000);
+    }
+
+    async function startTyping() {
+      for (let i = 0; i < lines.length; i++) {
+        if (lines[i].trim() !== '') {
+          await typeLine(lines[i]);
+        } else {
+          const br = document.createElement('br');
+          container.appendChild(br);
+          await new Promise((r) => setTimeout(r, 400));
+        }
+      }
+    }
+
+    startButton.addEventListener('click', () => {
+      startButton.style.display = 'none';
+      card.style.display = 'block';
+      bgMusic.play();
+      startTyping();
+    });
+  </script>
+</body>
+</html>
